@@ -11,7 +11,7 @@ function calcLpsTable(pattern) {
             if (j < i) {
                 pointer += " ";
             } else {
-                pointer += "|";
+                pointer += pattern[i] == pattern[len]?"|":"X";
             }
         }
         console.log("");
@@ -39,6 +39,11 @@ function calcLpsTable(pattern) {
                 i++;
             }
         }
+        var lpsString ="";
+        for(var j=0;j<i;j++){
+            lpsString+=result[j];
+        }
+        console.log(lpsString);
     }
     return result;
 }
