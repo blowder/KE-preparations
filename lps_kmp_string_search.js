@@ -6,12 +6,13 @@ function calcLpsTable(pattern) {
     var i = 1;
     var len = 0;
     while (i < pattern.length) {
+        //display data
         var pointer = "";
         for (var j = 0; j <= i; j++) {
             if (j < i) {
                 pointer += " ";
             } else {
-                pointer += pattern[i] == pattern[len]?"|":"X";
+                pointer += pattern[i] == pattern[len] ? "|" : "X";
             }
         }
         console.log("");
@@ -26,7 +27,8 @@ function calcLpsTable(pattern) {
             }
             console.log(padding + pattern);
         }
-        //console.log(pattern[i] + " and " + pattern[len]);
+        //display data ends
+
         if (pattern[i] == pattern[len]) {
             len++;
             result[i] = len;
@@ -39,15 +41,55 @@ function calcLpsTable(pattern) {
                 i++;
             }
         }
-        var lpsString ="";
-        for(var j=0;j<i;j++){
-            lpsString+=result[j];
+        //display data
+        var lpsString = "";
+        for (var j = 0; j < i; j++) {
+            lpsString += result[j];
         }
         console.log(lpsString);
+        //display data ends
     }
     return result;
 }
 
 
-var result = calcLpsTable("ababca");
+var result = search("BCBAABACAABABACAA", "ABABAC");
 console.log(result);
+
+function search(string, pattern) {
+    var failIndex = calcLpsTable(pattern);
+
+    var stringIndex = 0;
+    var patternIndex = 0;
+    while (stringIndex < string.length) {
+        display(string, stringIndex, pattern, patternIndex);
+        if (string[stringIndex] == pattern[patternIndex]) {
+            if (patternIndex == pattern.length - 1) {
+                return stringIndex - patternIndex;
+            }
+            stringIndex++;
+            patternIndex++;
+        } else if (patternIndex == 0) {
+            stringIndex++;
+        } else {
+            patternIndex = failIndex[patternIndex];
+        }
+    }
+
+}
+
+function display(string, stringIndex, pattern, patternIndex) {
+    var pointerLine = "";
+    for (var i = 0; i <= stringIndex; i++) {
+        pointerLine += i == stringIndex ? "|" : " ";
+    }
+    var patternLine = "";
+    for (var i = 0; i <= stringIndex - patternIndex - 1; i++) {
+        patternLine += " ";
+    }
+    patternLine += pattern;
+    console.log(pointerLine);
+    console.log(string);
+    console.log(patternLine);
+    console.log("---");
+}
