@@ -53,7 +53,7 @@ function calcLpsTable(pattern) {
 }
 
 
-var result = search("BCBAABACAABABACAA", "ABABAC");
+var result = search("ABABBACBAABACAABABACAA", "ABABAC");
 console.log(result);
 
 function search(string, pattern) {
@@ -61,21 +61,22 @@ function search(string, pattern) {
 
     var stringIndex = 0;
     var patternIndex = 0;
-    while (stringIndex < string.length) {
-        display(string, stringIndex, pattern, patternIndex);
-        if (string[stringIndex] == pattern[patternIndex]) {
+
+    while (stringIndex <= string.length - pattern.length) {
+        display(string, stringIndex+patternIndex, pattern, patternIndex);
+        if (string[stringIndex + patternIndex] == pattern[patternIndex]) {
             if (patternIndex == pattern.length - 1) {
-                return stringIndex - patternIndex;
+                return stringIndex;
             }
-            stringIndex++;
             patternIndex++;
         } else if (patternIndex == 0) {
             stringIndex++;
         } else {
-            patternIndex = failIndex[patternIndex];
+            stringIndex = stringIndex + failIndex[patternIndex]+1;
+            patternIndex = 0;
         }
     }
-
+    return -1;
 }
 
 function display(string, stringIndex, pattern, patternIndex) {
