@@ -1,41 +1,34 @@
-function Node(value) {
-    this.value = value;
-    this.next = null;
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
 }
 
-function Stack() {
-    this.size = 0;
-    this._top = null;
-}
-
-Stack.prototype.put = function (value) {
-    var newTop = new Node(value);
-    newNode.next = this._top;
-    this._top 
-
-    if (this._top == null) {
+class Stack {
+    constructor() {
+        this.size = 0;
+        this._top = null;
+    }
+    put(value) {
+        var oldTop = this._top;
         this._top = new Node(value);
-    } else {
-        var newTop = new Node(value);
-        newTop.next = this._top;
-        this._top = newTop;
+        this._top.next = oldTop;
+        this.size++;
     }
-    this.size++;
-}
-Stack.prototype.top = function () {
-    return this._top == null ? null : this._top.value;
-}
-
-Stack.prototype.pop = function () {
-    if (this._top == null) {
-        return null;
-    } else {
-        var result = this._top;
-        this._top = this._top.next;
-        return result.value;
+    top() {
+        return this._top != null ? this._top.value : null;
+    }
+    pop() {
+        var value = null;
+        if (this._top != null) {
+            value = this._top.value;
+            this._top = this._top.next;
+            this.size--;
+        }
+        return value;
     }
 }
-
 
 var stack = new Stack();
 console.log(stack.top());

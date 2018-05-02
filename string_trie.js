@@ -4,7 +4,7 @@ function Node() {
 }
 
 function TrieST() {    
-    var root = new Node();
+    this.root = new Node();
 }
 
 TrieST.prototype.keys = function () {
