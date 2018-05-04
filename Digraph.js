@@ -10,7 +10,7 @@ class Digraph {
     }
 
     getVerticlesSize() {
-        return this.verticlesCount.bucket;
+        return this.verticlesCount;
     }
 
     getEdgesSize() {
@@ -25,7 +25,7 @@ class Digraph {
     }
 
     adjacencyList(verticle) {
-        return verticle < verticlesCount
+        return verticle < this.verticlesCount
             ? this.buckets[verticle]
             : [];
     }

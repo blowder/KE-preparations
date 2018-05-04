@@ -1,8 +1,12 @@
 const Digraph = require('./Digraph.js');
+const DirectedDFS = require('./DirectedDFS.js');
 var fs = require('fs');
 var digraph = readGraph("./digraph.txt");
 digraph.toString();
 
+
+var dfs = new DirectedDFS().build(digraph, [0]);
+console.log(dfs.reached());
 
 function readGraph(filepath) {
     var content = fs.readFileSync(filepath, "utf-8");
