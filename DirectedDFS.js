@@ -10,6 +10,8 @@ class DirectedDFS {
         this._graph = graph;
         this._marked = [];
         this._trace(vertexes);
+        //var filteredMarked = [];
+        //this._marked = this._marked.filter(vertex => !vertexes.includes(vertex));
         return this;
     }
 

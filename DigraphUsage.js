@@ -1,15 +1,46 @@
 const Digraph = require('./Digraph.js');
 const DirectedDFS = require('./DirectedDFS.js');
 var fs = require('fs');
-var digraph = readGraph("./digraph.txt");
-digraph.toString();
 
+console.log(recognize(".*(AsA|BB).*", "11AsA22"));
 
-var dfs = new DirectedDFS().build(digraph, [0]);
-console.log(dfs.reached());
-
-var pattern = "(.*AB((C|D*E)F)*G)";
-console.log(buildNFA(pattern));
+/**
+ * 
+ * @param {String} pattern
+ * @param {String} text
+ * @returns {boolean} 
+ */
+function recognize(pattern, text) {
+    var digraph = buildNFA(pattern);
+    var dfs = new DirectedDFS().build(digraph, [0]);
+    var bag = [];
+    for (var i = 0; i < digraph.getVerticlesSize(); i++) {
+        if (dfs.marked(i)) {
+            bag.push(i);
+        }
+    }
+    for (var i of text) {
+        var match = [];
+        for (var j of bag) {
+            if (j < digraph.getVerticlesSize()) {
+                if (i == pattern[j] || "." == pattern[j]) {
+                    match.push(j + 1);
+                }
+            }
+        }
+        if (match.length == 0) {
+            match.push(0);
+        }
+        dfs = new DirectedDFS().build(digraph, match);
+        bag = [];
+        for (var i = 0; i < digraph.getVerticlesSize(); i++) {
+            if (dfs.marked(i)) {
+                bag.push(i);
+            }
+        }
+    }
+    return bag.includes(digraph.getVerticlesSize() - 1);
+}
 
 /**
  * 
@@ -40,7 +71,7 @@ function buildNFA(pattern) {
             nfa.addEdge(lp, i + 1)
             nfa.addEdge(i + 1, lp)
         }
-    
+
         if (symbol == "(" || symbol == ")" || symbol == "*") {
             nfa.addEdge(i, i + 1);
         }
