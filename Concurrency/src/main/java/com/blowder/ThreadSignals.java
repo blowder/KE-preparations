@@ -15,6 +15,7 @@ public class ThreadSignals {
         public synchronized void addTask(String task) {
             this.tasks.add(task);
         }
+
         public synchronized List<String> getTasks() {
             try {
                 System.out.println(Thread.currentThread().getName() + "-  Wait for tasks");
@@ -70,9 +71,22 @@ public class ThreadSignals {
         new Thread(consumer).start();
         new Thread(consumer).start();
         new Thread(producer).start();
-       /* Thread.sleep(500);
-        new Thread(producer).start();
-        Thread.sleep(500);
-        new Thread(producer).start();*/
+        /*
+         * Thread.sleep(500); new Thread(producer).start(); Thread.sleep(500); new
+         * Thread(producer).start();
+         */
+    }
+
+    public static void runJoinedThread() throws InterruptedException{
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName() + " - Hello from worker");
+            }
+        });
+        
+        thread.start();
+        thread.join();
+        System.out.println(Thread.currentThread().getName() + " - Hello from main app");
     }
 }
