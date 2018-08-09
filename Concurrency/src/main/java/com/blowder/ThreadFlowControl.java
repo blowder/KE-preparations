@@ -3,6 +3,7 @@ package com.blowder;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Semaphore;
 
 public class ThreadFlowControl {
     public static class FinalCountdown {
@@ -10,20 +11,17 @@ public class ThreadFlowControl {
 
         public void startForCountdown() {
             for (int i = 5; i > 0; i--) {
-                try {
-                    latch.countDown();
-                    System.out.println(Thread.currentThread().getName() + " counter is " + i);
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    // do nothing
-                }
+                latch.countDown();
+                TestUtils.log("Counter is "+ i);
+                TestUtils.sleep(50);
             }
         }
 
         public void waitForCountDown() {
             try {
                 latch.await();
-                System.out.println(Thread.currentThread().getName() + " executed after countdown");
+                TestUtils.sleep(10);
+                TestUtils.log("Executed after countdown");
             } catch (InterruptedException e) {
                 // od nothing
             }
@@ -34,21 +32,49 @@ public class ThreadFlowControl {
         CyclicBarrier barier = new CyclicBarrier(5);
 
         public void process() {
-            System.out.println(Thread.currentThread().getName() + " am next to barier");
+            TestUtils.log("Am next to barier");
             try {
                 barier.await();
-                Thread.sleep(10);
+                TestUtils.sleep(10);
             } catch (BrokenBarrierException | InterruptedException e) {
                 // do nothing
             }
-            System.out.println(Thread.currentThread().getName() + " am proccessing my task");
+            TestUtils.log("Am proccessing my task");
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static class TaskProducerWithSemaphore {
+        private Semaphore semaphore = new Semaphore(2);
+
+        public void showTask() {
+            try {
+                semaphore.acquire();
+                TestUtils.sleep(1000);
+                TestUtils.log("Hello task executed");
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                semaphore.release();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
         countdownLatchTest();
-        Thread.sleep(1000);
+        TestUtils.sleep(1000);
+        TestUtils.log("-----------------------");
         cyclicBarierTest();
+        TestUtils.sleep(1000);
+        TestUtils.log("-----------------------");
+        semaphoreTest();
+    }
+
+    private static void semaphoreTest() {
+        TaskProducerWithSemaphore tSemaphore = new TaskProducerWithSemaphore();
+        for (int i = 0; i < 8; i++) {
+            new Thread(() -> tSemaphore.showTask()).start();
+        }
     }
 
     private static void cyclicBarierTest() {
