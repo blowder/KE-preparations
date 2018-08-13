@@ -8,6 +8,7 @@ import java.util.concurrent.RecursiveTask;
 
 class ForkJoinTest {
     public static class Summator extends RecursiveTask<Integer> {
+        private static final long serialVersionUID = 1L;
         private final List<Integer> values;
 
         public Summator(List<Integer> values) {
