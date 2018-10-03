@@ -8,7 +8,9 @@ import javax.servlet.http.*;
 
 @WebServlet("/ping")
 public class Ping extends HttpServlet {
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String result = "<html><body>";
         
         Enumeration<String> names = req.getParameterNames();
