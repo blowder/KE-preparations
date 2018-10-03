@@ -36,6 +36,7 @@
     </dependency>
   </dependencies>
   <build>
+    <finalName>serv</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
