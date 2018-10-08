@@ -5,6 +5,7 @@
     </head>
     <body>
         <h1>Hello from ${pingController.ping()}</h1>
-        <a href="<%=request.getContextPath()%>/form.jsp">Form test</a>
+        <a href="${pageContext.request.contextPath}/form.jsp">Form test</a>
+        <a href="${pageContext.request.contextPath}/numbers.jsp">Show Numbers</a>
     </body>
 </html>
