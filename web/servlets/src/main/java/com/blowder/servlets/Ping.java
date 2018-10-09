@@ -15,13 +15,13 @@ public class Ping extends HttpServlet {
         
         Enumeration<String> names = req.getParameterNames();
         while (names.hasMoreElements()) {
-            String element = (String) names.nextElement();
+            String element = names.nextElement();
             result += "<p>" + element + "=" + req.getParameter(element) + "</p>";
         }
         result += "</body></html>";
         try (PrintWriter writer = resp.getWriter()) {
             writer.append(result);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         resp.setStatus(201);
 
