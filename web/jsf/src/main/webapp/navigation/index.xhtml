@@ -8,8 +8,14 @@
 </head>
 
 <body>
+    <h1>Navigation links</h1>
     <h:form>
-        <h:commandButton action="/navigation/index?faces-redirect=true" value="Navigation" />
+        <h:commandButton action="/navigation/first" value="First page"/>
+        <h:commandButton action="#{navigator.navigate('/navigation')}" value="Second page" />
+    </h:form>
+    <br/>
+    <h:form>
+        <h:commandLink action="/index" value="Back"/>
     </h:form>
 </body>
 
