@@ -3,15 +3,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
 
-<head>
-    <title>JSF Tutorial!</title>
-</head>
-
 <body>
+    <h1>Profile page</h1>
+    <h1>Hello new user #{profile.getUsername()}</h1>
+    <h1>Your password is #{profile.getPassword()}</h1>
+    <br/>
     <h:form>
-        <h:commandButton action="/navigation/index?faces-redirect=true" value="Navigation" />
-        <br/>
-        <h:commandButton action="/form/index?faces-redirect=true" value="Form" />
+        <h:commandLink action="/form/index" value="Back" />
     </h:form>
 </body>
 

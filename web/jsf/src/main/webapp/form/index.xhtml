@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+
+<body>
+    <h1>First page</h1>
+    <h:form>
+        <h3>Username</h3>
+        <h:inputText id="usernameInput" value="#{profile.username}">
+            <f:validateLength minimum="5" maximum="8" />
+        </h:inputText>
+        <h3>Password</h3>
+        <h:inputSecret id="passwordInput" value="#{profile.password}">
+            <f:validateLength minimum="5" maximum="8" />
+            <f:validateRegex pattern = "[0-9]+" />
+        </h:inputSecret>
+        <h:commandButton action="/form/profile" value="Submit" />
+
+        <h:message for="usernameInput" style="color:red" />
+        <h:message for="passwordInput" style="color:red" />
+
+    </h:form>
+
+    <h:form>
+        <h:commandLink action="/index" value="Back" />
+    </h:form>
+</body>
+
+</html>
